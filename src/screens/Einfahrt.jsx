@@ -25,11 +25,28 @@ const Einfahrt = () => {
         if (einfahrtSuccess) {
             BackendConnector.createSession(userID, kennzeichen)
         }
+
+        console.log(einfahrtSuccess)
     }
 
     return (
         <div>
+            <h1 style={{textAlign: "center"}}>Parkautomat</h1>
+            <div className="container">            
 
+                <h2>Einfahrtsansicht</h2>
+
+                <form>
+                    <label htmlFor="CntFreePlaces">Anzahl freier Parkplätze:</label><br/>
+                    <output name="x" for=" "></output>
+                    <label htmlFor="LicencePlate">Kennzeichen:</label><br/>
+                    <input type="text" name="LicencePlate" id="LicencePlate" onChange={e => setkennzeichen(e.target.value)} /><br/>
+                    <label htmlFor="CustomerNo" >Kunden ID:</label><br/>
+                    <input type="text" name="CustomerNo" id="CustomerNo" onChange={e => setUserID(e.target.value)} /><br/>
+                </form>
+
+                <p>Einfahrt: <button type="button" style={{height: "50px", width: "50px"}} onClick={handleEinfahrt}></button></p>
+            </div>
         </div>)
 }
 
