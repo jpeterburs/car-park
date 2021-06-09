@@ -24,9 +24,7 @@ const Ausfahrt = () => {
     }
 
     const handlePay = () => {
-        console.log("triggerd!!!")
-        
-        /* const currentDate = new Date();
+        const currentDate = new Date();
 
         setSession((prevState) => {
             var newState = {...prevState, Ausfahrt: currentDate};
@@ -36,7 +34,7 @@ const Ausfahrt = () => {
         let dauerInMS = session.Ausfahrt - session.Einfahrt;
         setParkdauer(Math.ceil(dauerInMS/1000/60/60));
 
-        BackendConnector.updateSession(session); */
+        BackendConnector.updateSession(session);
     }
 
 
