@@ -1,32 +1,77 @@
-/* body {
+body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: #30475e;
+  color: #eee;
+  font-family: Arial, Verdana, sans-serif;
+}
+* {
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#root {
+  width: 60%;
+  margin: auto;
 }
- */
 
- body {
-  color: black;
-  background-color: darkgray;
-  }
-h1 {
-  padding-bottom: 80px;
-}
-h2 {
-  padding-bottom: 30px;
-}
-p {
-  padding-bottom: 20px;
-}
 .container {
-  width: 500px;
+  color: #444;
+  background-color: #fefefe;
+  margin: 5% auto 15% auto;
+  padding: 16px;
+  border: 1px solid #888;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+input[tyxpe=text]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+.btn {
+  border: none;
+  color: white;
+  padding: 14px 28px;
+  margin: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none
+}
+
+.info {
+  background-color: #2196F3;
+}
+.info:hover {
+  background: #0b7dda;
+}
+
+.success {
+  background-color: #04AA6D;
+}
+.success:hover {
+  background-color: #46a049;
+}
+
+.default {
+  background-color: #e7e7e7;
+  color: black;
+}
+.default:hover {
+  background: #ddd;
+}
+
+.keep-left {
+  float: left;
+}
+
+.clearfix::after {
+  content: "";
   clear: both;
+  display: table;
 }
