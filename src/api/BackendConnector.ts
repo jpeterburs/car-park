@@ -31,10 +31,10 @@ class BackendConnector {
         return session;
     }
 
-    static async getParkerAmount (): Promise<{kurz: number, dauer: number}> {
+    static async getParkerAmount (): Promise<ParkerStatistic> {
         let stats: ParkerStatistic = await fetch(this.apiUrl).then(resp => resp.json())
 
-        return {kurz: stats.normal_sessions, dauer: stats.permanent_parker_sessions}; 
+        return stats; 
     }
 }
 

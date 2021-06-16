@@ -1,32 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BackendConnector from "../api/BackendConnector";
-import Constants from "../constants/Constants";
 
 const Einfahrt = () => {
     const [userID, setUserID] = useState(null);
     const [kennzeichen, setkennzeichen] = useState(null);
+    const [freiKurz, setFreiKurz] = useState();
+    const [freiDauer, setFreiDauer] = useState();
+
+    useEffect(() => {
+        BackendConnector.getParkerAmount().then(resp => {
+            setFreiDauer(resp.max_capacity - resp.normal_sessions - resp.permanent_parker_sessions);
+
+            let diffDauerparkerCapacity = resp.permanent_parker_sessions - resp.reserved;
+            let excessDauerParker = diffDauerparkerCapacity < 0 ? 0 : diffDauerparkerCapacity;
+            let freiPlaetze = resp.max_capacity - resp.reserved - excessDauerParker - resp.normal_sessions;
+            setFreiKurz(freiPlaetze);
+        })}, []);
 
     const handleEinfahrt = () => {
-        BackendConnector.getParkerAmount().then(resp => 
-            {
-                let einfahrtSuccess = false;
+        let einfahrtSuccess = false;
                 
-                if (userID) {
-                    if (resp.dauer + resp.kurz < Constants.MaxCapacity ) {
-                        einfahrtSuccess = true;
-                    }
-                } else {
-                    let diffDauerparkerCapacity = resp.dauer - Constants.DauerParkerReserve;
-                    let excessDauerParker = diffDauerparkerCapacity < 0 ? 0 : diffDauerparkerCapacity;
-                    if (Constants.MaxCapacity - Constants.DauerParkerReserve - excessDauerParker > 4) {
-                        einfahrtSuccess = true;
-                    }
-                }
-                
-                if (einfahrtSuccess) {
-                    BackendConnector.createSession(userID, kennzeichen)
-                }
-            });
+        if (userID) {
+            if (freiDauer > 0) {
+                einfahrtSuccess = true;
+            }
+        } else {
+            if (freiKurz > 4) {
+                einfahrtSuccess = true;
+            }
+        }
+        
+        if (einfahrtSuccess) {
+            BackendConnector.createSession(userID, kennzeichen)
+        }
     }
 
     return (
@@ -35,7 +41,7 @@ const Einfahrt = () => {
           <h1>Einfahrt</h1>
 
           <label htmlFor="CntFreePlaces"><b>Freie Parkplätze:</b></label>
-          <output name="x" for=" "></output>
+          <output name="x" for=" ">{freiKurz > 4 ? freiKurz : "Belegt"}</output>
 
           <hr style={{"border": "1px solid #f1f1f1", "margin-bottom": "25px"}} />
 

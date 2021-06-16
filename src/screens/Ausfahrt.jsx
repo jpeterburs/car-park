@@ -1,13 +1,12 @@
 import { useState } from "react";
 import BackendConnector from "../api/BackendConnector";
 import ParkerType from "../api/ParkerType";
-import { SessionGet } from "../api/Session";
 
 const Ausfahrt = () => {
     const [sessionID, setSessionID] = useState(null);
     const [readyToExit, setReadyToExit] = useState(false);
     const [parkerType, setParkerType] = useState(ParkerType.None);
-    const [session, setSession] = useState<SessionGet | null>(null);
+    const [session, setSession] = useState(null);
     const [parkdauer, setParkdauer] = useState(null);
 
     const handleAusfahrt = () => {
@@ -48,19 +47,23 @@ const Ausfahrt = () => {
           </div>
 
           {/* hide before session id is entered and confirmed */}
-          <hr style={{"border": "1px solid #f1f1f1", "margin-bottom": "25px"}} />
+          {readyToExit ? 
+            <div>
+              <hr style={{"border": "1px solid #f1f1f1", "margin-bottom": "25px"}} />
 
-          <label htmlFor="Price"><b>Total:</b></label>
-          <output name="Price" htmlFor=" " value={parkdauer}></output>
+              <label htmlFor="Price"><b>Total:</b></label>
+              <output name="Price" htmlFor=" " value={parkdauer}></output>
 
-          <br />
-          <br />
+              <br />
+              <br />
 
-          {/* give info tag to primary button, default to disabled */}
-          <div className="clearfix">
-            <button className="btn default keep-left" type="button" style={{"width": "50%", "margin": "0"}} onClick={handlePay} disabled={!(readyToExit || (parkerType === ParkerType.Kurz))} >Bezahlen</button>
-            <button className="btn info keep-left" type="button" style={{"width": "50%", "margin": "0"}} onClick={handlePay} disabled={!(readyToExit || (parkerType === ParkerType.Dauer))}>Fortfahren</button>
-          </div>
+              {/* give info tag to primary button, default to disabled */}
+              <div className="clearfix">
+                <button className={`btn ${!(readyToExit || (parkerType === ParkerType.Kurz)) ? "default" : "info"} keep-left`} type="button" style={{"width": "50%", "margin": "0"}} onClick={handlePay} disabled={!(readyToExit || (parkerType === ParkerType.Kurz))} >Bezahlen</button>
+                <button className={`btn ${!(readyToExit || (parkerType === ParkerType.Dauer)) ? "default" : "info"} keep-left`} type="button" style={{"width": "50%", "margin": "0"}} onClick={handlePay} disabled={!(readyToExit || (parkerType === ParkerType.Dauer))}>Fortfahren</button>
+              </div>
+            </div>
+          : null}
         </form>
       </div>
     )
