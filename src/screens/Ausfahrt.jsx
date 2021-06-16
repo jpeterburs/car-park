@@ -17,7 +17,7 @@ const Ausfahrt = () => {
           console.log("----------------------------------");
           setSession(session);
           
-          if (session.permanent_parker){
+          if (session.session.permanent_parker){
             setParkerType(ParkerType.Dauer);
           } else {
             setParkerType(ParkerType.Kurz);
@@ -28,8 +28,8 @@ const Ausfahrt = () => {
     }
 
     const handlePay = () => {
-      BackendConnector.updateSession(session.id).then(session => {
-        let dauerInMS = session.exited_at - session.entered_at;
+      BackendConnector.updateSession(session.session.id).then(session => {
+        let dauerInMS = session.session.exited_at - session.session.entered_at;
         setParkdauer(Math.ceil(dauerInMS/1000/60/60));
       });
 
