@@ -15,24 +15,25 @@ class BackendConnector {
         fetch(`${this.apiUrl}/api/sessions`, 
             {
                 method: "POST",
-                body: JSON.stringify(newSession)
+                body: JSON.stringify(newSession),
+                mode: "cors"
             }
         )
         //console.log("backendconnector", userID, kennzeichen)
     }
 
     static async getSession(sessionID: number) : Promise<SessionGet | null> {
-        let session: SessionGet = await fetch(`${this.apiUrl}/api/sessions/${sessionID}`).then(resp => resp.json())
+        let session: SessionGet = await fetch(`${this.apiUrl}/api/sessions/${sessionID}`, {mode: "cors"}).then(resp => resp.json())
         return session;
     }
 
     static async updateSession(sessionID: number): Promise<SessionGet> {
-        let session: SessionGet = await fetch(`${this.apiUrl}/api/sessions/${sessionID}`, {method: 'PUT'}).then(resp => resp.json())
+        let session: SessionGet = await fetch(`${this.apiUrl}/api/sessions/${sessionID}`, {method: 'PUT', mode: "cors"}).then(resp => resp.json())
         return session;
     }
 
     static async getParkerAmount (): Promise<ParkerStatistic> {
-        let stats: ParkerStatistic = await fetch(this.apiUrl).then(resp => resp.json())
+        let stats: ParkerStatistic = await fetch(this.apiUrl, {mode:"cors"}).then(resp => resp.json())
 
         return stats; 
     }
