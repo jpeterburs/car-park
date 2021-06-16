@@ -59,8 +59,8 @@ const Ausfahrt = () => {
 
               {/* give info tag to primary button, default to disabled */}
               <div className="clearfix">
-                <button className={`btn ${!(readyToExit || (parkerType === ParkerType.Kurz)) ? "default" : "info"} keep-left`} type="button" style={{"width": "50%", "margin": "0"}} onClick={handlePay} disabled={!(readyToExit || (parkerType === ParkerType.Kurz))} >Bezahlen</button>
-                <button className={`btn ${!(readyToExit || (parkerType === ParkerType.Dauer)) ? "default" : "info"} keep-left`} type="button" style={{"width": "50%", "margin": "0"}} onClick={handlePay} disabled={!(readyToExit || (parkerType === ParkerType.Dauer))}>Fortfahren</button>
+                <button className={`btn ${(readyToExit && (parkerType === ParkerType.Kurz)) ? "info" : "default"} keep-left`} type="button" style={{"width": "50%", "margin": "0"}} onClick={handlePay} disabled={!(readyToExit || (parkerType === ParkerType.Kurz))} >Bezahlen</button>
+                <button className={`btn ${(readyToExit && (parkerType === ParkerType.Dauer)) ? "info" : "default"} keep-left`} type="button" style={{"width": "50%", "margin": "0"}} onClick={handlePay} disabled={!(readyToExit || (parkerType === ParkerType.Dauer))}>Fortfahren</button>
               </div>
             </div>
           : null}
