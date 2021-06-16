@@ -24,7 +24,7 @@ const Ausfahrt = () => {
     }
 
     const handlePay = () => {
-      BackendConnector.updateSession(session).then(session => {
+      BackendConnector.updateSession(session.id).then(session => {
         let dauerInMS = session.exited_at - session.entered_at;
         setParkdauer(Math.ceil(dauerInMS/1000/60/60));
       });
