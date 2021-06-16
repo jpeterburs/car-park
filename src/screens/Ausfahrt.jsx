@@ -34,31 +34,36 @@ const Ausfahrt = () => {
 
 
     return (
-        <div>
-            <h1 style={{textAlign: "center"}}>Parkautomat</h1>
-            <div className="container">            
+      <div className="container">
+        <form>
+          <h1>Bezahlen / Ausfahrt</h1>
 
-                <h2>Ausfahrtsansicht</h2>
+          <hr style={{"border": "1px solid #f1f1f1", "margin-bottom": "25px"}} />
 
-                <form>
-                    <label htmlFor="SessionId">Session ID:</label><br/>
-                    <input type="text" name="SessionId" id="SessionId" onChange={e => setSessionID(e.target.value)} /><br/>
-                    {/* <label htmlFor="CustomerNo">Kunden ID:</label><br/>
-                    <input type="text" name="CustomerNo" id="CustomerNo"/><br/> */}
-                </form>
+          <label htmlFor="SessionId"><b>Session ID:</b></label>
+          <input type="text" placeholder="Befindet sich auf ihrem Schein" name="SessionId" onChange={e => setSessionID(e.target.value)} /><br/>
 
-                <p>Ausfahrt: <button type="button" style={{height: "50px", width: "50px"}} onClick={handleAusfahrt}></button></p>
+          <div className="clearfix">
+            <button className="btn success keep-left" type="button" style={{"width": "100%", "margin": "0"}} onClick={handleAusfahrt}>Bestätigen</button>
+          </div>
 
-                <form>
-                    <label htmlFor="Price">Preis:</label><br/>
-                    <output name="Price" htmlFor=" " value={parkdauer}></output><br/>
-                </form>
+          {/* hide before session id is entered and confirmed */}
+          <hr style={{"border": "1px solid #f1f1f1", "margin-bottom": "25px"}} />
 
-                <p>Bezahlung (Kurzparker): <button type="button" style={{height: "50px", width: "50px"}} onClick={() => handlePay()} disabled={!(readyToExit || (parkerType === ParkerType.Kurz))} ></button></p>
+          <label htmlFor="Price"><b>Total:</b></label>
+          <output name="Price" htmlFor=" " value={parkdauer}></output>
 
-                <p>Rausfahren (Dauerparker): <button type="button" style={{height: "50px", width: "50px"}} onClick={() => handlePay()} disabled={!(readyToExit || (parkerType === ParkerType.Dauer))}></button></p>
-            </div>
-    </div>)
+          <br />
+          <br />
+
+          {/* give info tag to primary button, default to disabled */}
+          <div className="clearfix">
+            <button className="btn default keep-left" type="button" style={{"width": "50%", "margin": "0"}} onClick={handlePay} disabled={!(readyToExit || (parkerType === ParkerType.Kurz))} >Bezahlen</button>
+            <button className="btn info keep-left" type="button" style={{"width": "50%", "margin": "0"}} onClick={handlePay} disabled={!(readyToExit || (parkerType === ParkerType.Dauer))}>Fortfahren</button>
+          </div>
+        </form>
+      </div>
+    )
 }
 
 export default Ausfahrt;

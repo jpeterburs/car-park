@@ -30,24 +30,27 @@ const Einfahrt = () => {
     }
 
     return (
-        <div>
-            <h1 style={{textAlign: "center"}}>Parkautomat</h1>
-            <div className="container">            
+      <div className="container">
+        <form>
+          <h1>Einfahrt</h1>
 
-                <h2>Einfahrtsansicht</h2>
+          <label htmlFor="CntFreePlaces"><b>Freie Parkplätze:</b></label>
+          <output name="x" for=" "></output>
 
-                <form>
-                    <label htmlFor="CntFreePlaces">Anzahl freier Parkplätze:</label><br/>
-                    <output name="x" for=" "></output>
-                    <label htmlFor="LicencePlate">Kennzeichen:</label><br/>
-                    <input type="text" name="LicencePlate" id="LicencePlate" onChange={e => setkennzeichen(e.target.value)} /><br/>
-                    <label htmlFor="CustomerNo" >Kunden ID:</label><br/>
-                    <input type="text" name="CustomerNo" id="CustomerNo" onChange={e => setUserID(e.target.value)} /><br/>
-                </form>
+          <hr style={{"border": "1px solid #f1f1f1", "margin-bottom": "25px"}} />
 
-                <p>Einfahrt: <button type="button" style={{height: "50px", width: "50px"}} onClick={handleEinfahrt}></button></p>
-            </div>
-        </div>)
+          <label htmlFor="LicencePlate"><b>Kennzeichen:</b></label>
+          <input type="text" placeholder="Kennzeichen ihres Autos" name="LicencePlate" id="LicencePlate" onChange={e => setkennzeichen(e.target.value)} required />
+
+          <label htmlFor="CustomerNo" ><b>Kunden ID:</b></label>
+          <input type="text" placeholder="Falls vorhanden (optional)" name="CustomerNo" id="CustomerNo" onChange={e => setUserID(e.target.value)} />
+
+          <div className="clearfix">
+            <button className="btn success keep-left" type="button" style={{"width": "100%", "margin": "0"}} onClick={handleEinfahrt}>Einparken</button>
+          </div>
+        </form>
+      </div>
+    )
 }
 
 export default Einfahrt;
