@@ -1,25 +1,40 @@
-import { Session } from "inspector";
+import { SessionSend, SessionGet } from "./Session";
+import { ParkerStatistic } from "./ParkerSatistic";
 
 class BackendConnector {
-    static createSession(userID: number, kennzeichen: string) {
-        const currentDate = new Date();
-        //TODO
+    static apiUrl: string = `${window.location.protocol}//${window.location.hostname}:3000`
 
-        console.log("backendconnector", userID, kennzeichen)
+    static createSession(userID: number | null, kennzeichen: string) {
+        let newSession: SessionSend = {
+            session: {
+                license_plate: kennzeichen,
+                permanent_parker_id: userID
+            }
+        }
+
+        fetch(`${this.apiUrl}/api/sessions`, 
+            {
+                method: "POST",
+                body: JSON.stringify(newSession)
+            }
+        )
+        //console.log("backendconnector", userID, kennzeichen)
     }
 
-    static getSession(sessionID: number) : Session|null {
-        //TODO
-        return null;
+    static async getSession(sessionID: number) : Promise<SessionGet | null> {
+        let session: SessionGet = await fetch(`${this.apiUrl}/api/sessions/${sessionID}`).then(resp => resp.json())
+        return session;
     }
 
-    static updateSession(session: Session) {
-        //TODO
+    static async updateSession(sessionID: number): Promise<SessionGet> {
+        let session: SessionGet = await fetch(`${this.apiUrl}/api/sessions/${sessionID}`, {method: 'PUT'}).then(resp => resp.json())
+        return session;
     }
 
-    static getParkerAmount (): {kurz: number, dauer: number} {
-        //TODO
-        return {kurz: 50, dauer: 10}; //dummy data
+    static async getParkerAmount (): Promise<{kurz: number, dauer: number}> {
+        let stats: ParkerStatistic = await fetch(this.apiUrl).then(resp => resp.json())
+
+        return {kurz: stats.normal_sessions, dauer: stats.permanent_parker_sessions}; 
     }
 }
 

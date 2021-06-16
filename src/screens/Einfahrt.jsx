@@ -7,26 +7,26 @@ const Einfahrt = () => {
     const [kennzeichen, setkennzeichen] = useState(null);
 
     const handleEinfahrt = () => {
-        const {dauer, kurz} = BackendConnector.getParkerAmount();
-        let einfahrtSuccess = false;
-
-        if (userID) {
-            if (dauer + kurz < Constants.MaxCapacity ) {
-                einfahrtSuccess = true;
-            }
-        } else {
-            let diffDauerparkerCapacity = dauer - Constants.DauerParkerReserve;
-            let excessDauerParker = diffDauerparkerCapacity < 0 ? 0 : diffDauerparkerCapacity;
-            if (Constants.MaxCapacity - Constants.DauerParkerReserve - excessDauerParker > 4) {
-                einfahrtSuccess = true;
-            }
-        }
-
-        if (einfahrtSuccess) {
-            BackendConnector.createSession(userID, kennzeichen)
-        }
-
-        console.log(einfahrtSuccess)
+        BackendConnector.getParkerAmount().then(resp => 
+            {
+                let einfahrtSuccess = false;
+                
+                if (userID) {
+                    if (resp.dauer + resp.kurz < Constants.MaxCapacity ) {
+                        einfahrtSuccess = true;
+                    }
+                } else {
+                    let diffDauerparkerCapacity = resp.dauer - Constants.DauerParkerReserve;
+                    let excessDauerParker = diffDauerparkerCapacity < 0 ? 0 : diffDauerparkerCapacity;
+                    if (Constants.MaxCapacity - Constants.DauerParkerReserve - excessDauerParker > 4) {
+                        einfahrtSuccess = true;
+                    }
+                }
+                
+                if (einfahrtSuccess) {
+                    BackendConnector.createSession(userID, kennzeichen)
+                }
+            });
     }
 
     return (

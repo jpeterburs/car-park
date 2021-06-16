@@ -1,40 +1,35 @@
 import { useState } from "react";
 import BackendConnector from "../api/BackendConnector";
 import ParkerType from "../api/ParkerType";
-
+import { SessionGet } from "../api/Session";
 
 const Ausfahrt = () => {
     const [sessionID, setSessionID] = useState(null);
     const [readyToExit, setReadyToExit] = useState(false);
     const [parkerType, setParkerType] = useState(ParkerType.None);
-    const [session, setSession] = useState(null);
+    const [session, setSession] = useState<SessionGet | null>(null);
     const [parkdauer, setParkdauer] = useState(null);
 
     const handleAusfahrt = () => {
-        let session = BackendConnector.getSession(sessionID);
-        setSession(session);
-
-        if (session.Dauerparker_ID){
+        BackendConnector.getSession(sessionID).then(session => {
+          setSession(session);
+          
+          if (session.permanent_parker){
             setParkerType(ParkerType.Dauer);
-        } else {
+          } else {
             setParkerType(ParkerType.Kurz);
-        }
-
-        setReadyToExit(true);
+          }
+          
+          setReadyToExit(true);
+        });
     }
 
     const handlePay = () => {
-        const currentDate = new Date();
-
-        setSession((prevState) => {
-            var newState = {...prevState, Ausfahrt: currentDate};
-            return newState
-        });
-
-        let dauerInMS = session.Ausfahrt - session.Einfahrt;
+      BackendConnector.updateSession(session).then(session => {
+        let dauerInMS = session.exited_at - session.entered_at;
         setParkdauer(Math.ceil(dauerInMS/1000/60/60));
+      });
 
-        BackendConnector.updateSession(session);
     }
 
 
