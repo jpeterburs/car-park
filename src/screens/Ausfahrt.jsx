@@ -11,6 +11,10 @@ const Ausfahrt = () => {
 
     const handleAusfahrt = () => {
         BackendConnector.getSession(sessionID).then(session => {
+          console.log("----------------------------------");
+          console.log("Session ID:", sessionID);
+          console.log("Session:", session)
+          console.log("----------------------------------");
           setSession(session);
           
           if (session.permanent_parker){
