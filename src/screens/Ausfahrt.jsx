@@ -30,6 +30,13 @@ const Ausfahrt = () => {
         });
     };
 
+    const handleKeypress = (e) => {
+        //it triggers by pressing the enter key
+        if (e.keyCode === 13) {
+            handleAusfahrt();
+        }
+    };
+
     return (
         <div className="container">
             <h1>Bezahlen / Ausfahrt</h1>
@@ -44,6 +51,7 @@ const Ausfahrt = () => {
                 placeholder="Befindet sich auf ihrem Schein"
                 name="SessionId"
                 onChange={(e) => setSessionID(e.target.value)}
+                onKeyPress={handleKeypress}
             />
             <br />
 
