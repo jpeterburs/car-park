@@ -36,6 +36,13 @@ const Einfahrt = () => {
         }
     };
 
+    const handleKeypress = (e) => {
+        //it triggers by pressing the enter key
+        if (e.keyCode === 13) {
+            handleEinfahrt();
+        }
+    };
+
     return (
         <div className="container">
             <h1>Einfahrt</h1>
@@ -59,6 +66,7 @@ const Einfahrt = () => {
                 id="LicencePlate"
                 onChange={(e) => setkennzeichen(e.target.value)}
                 required
+                onKeyPress={handleKeypress}
             />
 
             <label htmlFor="CustomerNo">
@@ -70,6 +78,7 @@ const Einfahrt = () => {
                 name="CustomerNo"
                 id="CustomerNo"
                 onChange={(e) => setUserID(e.target.value)}
+                onKeyPress={handleKeypress}
             />
 
             <div className="clearfix">
