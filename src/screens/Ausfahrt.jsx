@@ -41,7 +41,16 @@ const Ausfahrt = () => {
         <div className="container">
             <h1>Bezahlen / Ausfahrt</h1>
 
-            <hr style={{ border: "1px solid #f1f1f1", "margin-bottom": "25px" }} />
+            { /* Hide this on default, if error then show this */ }
+            { /* insert fitting class name here for color of alert */ }
+            { true ? (
+                <div className="alert alert-info">
+                    { /* Fill text here */ }
+                    Hello, World!
+                </div>
+            ) : null }
+
+            <hr style={{ border: "1px solid #f1f1f1", "marginBottom": "25px" }} />
 
             <label htmlFor="SessionId">
                 <b>Session ID:</b>
@@ -57,7 +66,7 @@ const Ausfahrt = () => {
 
             <div className="clearfix">
                 <button
-                    className="btn success keep-left"
+                    className="btn btn-success keep-left"
                     type="button"
                     style={{ width: "100%", margin: "0" }}
                     onClick={handleAusfahrt}
@@ -83,7 +92,7 @@ const Ausfahrt = () => {
                     <div className="clearfix">
                         <button
                             className={`btn ${
-                                readyToExit && parkerType === ParkerType.Kurz ? "info" : "default"
+                                readyToExit && parkerType === ParkerType.Kurz ? "btn-info" : "btn-default"
                             } keep-left`}
                             type="button"
                             style={{ width: "50%", margin: "0" }}
@@ -94,7 +103,7 @@ const Ausfahrt = () => {
                         </button>
                         <button
                             className={`btn ${
-                                readyToExit && parkerType === ParkerType.Dauer ? "info" : "default"
+                                readyToExit && parkerType === ParkerType.Dauer ? "btn-info" : "btn-default"
                             } keep-left`}
                             type="button"
                             style={{ width: "50%", margin: "0" }}
