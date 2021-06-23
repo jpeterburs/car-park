@@ -6,6 +6,8 @@ const Home = () => {
       <div style={{ "padding": "40vh", "text-align": "center" }}>
         <h1>Parkautomat</h1>
 
+        <h2>1 &euro; pro Stunde</h2>
+
         <br />
 
         <Link className="btn btn-info" to="/Einfahrt">Einfahrt</Link>
