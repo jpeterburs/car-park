@@ -8,8 +8,8 @@ const Home = () => {
 
         <br />
 
-        <Link className="btn info" to="/Einfahrt">Einfahrt</Link>
-        <Link className="btn info" to="/Ausfahrt">Ausfahrt</Link>
+        <Link className="btn btn-info" to="/Einfahrt">Einfahrt</Link>
+        <Link className="btn btn-info" to="/Ausfahrt">Ausfahrt</Link>
       </div>
     )
 }

@@ -40,6 +40,15 @@ const Einfahrt = () => {
         <div className="container">
             <h1>Einfahrt</h1>
 
+            { /* Hide this on default, if error then show this */ }
+            { /* insert fitting class name here for color of alert */ }
+            { true ? (
+                <div className="alert alert-info">
+                    { /* Fill text here */ }
+                    Hello, World!
+                </div>
+            ) : null }
+
             <label htmlFor="CntFreePlaces">
                 <b>Freie Parkplätze:</b>
             </label>
@@ -74,7 +83,7 @@ const Einfahrt = () => {
 
             <div className="clearfix">
                 <button
-                    className="btn success keep-left"
+                    className="btn btn-success keep-left"
                     type="button"
                     style={{ width: "100%", margin: "0" }}
                     onClick={handleEinfahrt}
