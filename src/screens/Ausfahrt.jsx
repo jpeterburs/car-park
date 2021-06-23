@@ -43,7 +43,7 @@ const Ausfahrt = () => {
                 </div>
             ) : null }
 
-            <hr style={{ border: "1px solid #f1f1f1", "margin-bottom": "25px" }} />
+            <hr style={{ border: "1px solid #f1f1f1", "marginBottom": "25px" }} />
 
             <label htmlFor="SessionId">
                 <b>Session ID:</b>

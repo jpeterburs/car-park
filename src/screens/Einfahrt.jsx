@@ -56,7 +56,7 @@ const Einfahrt = () => {
                 {freiKurz > 4 ? freiKurz : "Belegt"}
             </output>
 
-            <hr style={{ border: "1px solid #f1f1f1", "margin-bottom": "25px" }} />
+            <hr style={{ border: "1px solid #f1f1f1", "marginBottom": "25px" }} />
 
             <label htmlFor="LicencePlate">
                 <b>Kennzeichen:</b>
