@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import BackendConnector from "../api/BackendConnector";
 
 const Einfahrt = () => {
@@ -100,6 +101,9 @@ const Einfahrt = () => {
                     Einparken
                 </button>
             </div>
+
+            <br />
+            <Link className="link" to="/">zurück...</Link>
         </div>
     );
 };

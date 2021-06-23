@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import BackendConnector from "../api/BackendConnector";
 import ParkerType from "../api/ParkerType";
 
@@ -115,6 +116,9 @@ const Ausfahrt = () => {
                     </div>
                 </div>
             ) : null}
+
+            <br />
+            <Link className="link" to="/">zurück...</Link>
         </div>
     );
 };
