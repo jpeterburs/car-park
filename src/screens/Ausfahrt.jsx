@@ -9,6 +9,8 @@ const Ausfahrt = () => {
     const [parkerType, setParkerType] = useState(ParkerType.None);
     const [session, setSession] = useState(null);
     const [parkdauer, setParkdauer] = useState(null);
+    const [fetchSessionError, setFetchSessionError] = useState(false);
+    const [paymentError, setPaymentError] = useState(false);
 
     const handleAusfahrt = () => {
         BackendConnector.getSession(sessionID).then((session) => {
@@ -21,6 +23,8 @@ const Ausfahrt = () => {
             }
 
             setReadyToExit(true);
+        }).catch((error) => {
+            setFetchSessionError(true);
         });
     };
 
@@ -28,6 +32,8 @@ const Ausfahrt = () => {
         BackendConnector.updateSession(session.id).then((session) => {
             let dauerInMS = session.exited_at - session.entered_at;
             setParkdauer(Math.ceil(dauerInMS / 1000 / 60 / 60));
+        }).catch((error) => {
+            setPaymentError(true);
         });
     };
 
@@ -44,10 +50,17 @@ const Ausfahrt = () => {
 
             { /* Hide this on default, if error then show this */ }
             { /* insert fitting class name here for color of alert */ }
-            { true ? (
-                <div className="alert alert-info">
+            { fetchSessionError ? (
+                <div className="alert alert-danger">
                     { /* Fill text here */ }
-                    Hello, World!
+                    Es gab ein Problem beim Abrufen der Session!
+                </div>
+            ) : null }
+
+            { paymentError ? (
+                <div className="alert alert-danger">
+                    { /* Fill text here */ }
+                    Es gab ein Problem bei der Bezahlung!
                 </div>
             ) : null }
 

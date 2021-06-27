@@ -7,6 +7,11 @@ const Einfahrt = () => {
     const [kennzeichen, setkennzeichen] = useState(null);
     const [freiKurz, setFreiKurz] = useState();
     const [freiDauer, setFreiDauer] = useState();
+    const [session, setSession] = useState(null);
+    const [dataFetchError, setDataFetchError] = useState(false);
+    const [einfahrtSaveError, setEinfahrtSaveError] = useState(false);
+    const [keinPlatzError, setKeinPlatzError] = useState(false);
+    
 
     useEffect(() => {
         BackendConnector.getParkerAmount().then((resp) => {
@@ -16,6 +21,8 @@ const Einfahrt = () => {
             let excessDauerParker = diffDauerparkerCapacity < 0 ? 0 : diffDauerparkerCapacity;
             let freiPlaetze = resp.max_capacity - resp.reserved - excessDauerParker - resp.normal_sessions;
             setFreiKurz(freiPlaetze);
+        }).catch((error) => {
+            setDataFetchError(true);
         });
     }, []);
 
@@ -33,7 +40,13 @@ const Einfahrt = () => {
         }
 
         if (einfahrtSuccess) {
-            BackendConnector.createSession(userID, kennzeichen);
+            BackendConnector.createSession(userID, kennzeichen).then((resp) => {
+                setSession(resp);
+            }).catch((error) => {
+                setEinfahrtSaveError(true);
+            });
+        } else {
+            setKeinPlatzError(true);
         }
     };
 
@@ -50,19 +63,41 @@ const Einfahrt = () => {
 
             { /* Hide this on default, if error then show this */ }
             { /* insert fitting class name here for color of alert */ }
-            { true ? (
-                <div className="alert alert-info">
+            { dataFetchError ? (
+                <div className="alert alert-warn">
                     { /* Fill text here */ }
-                    Hello, World!
+                    Verbindung zum Server konnte nicht hergestellt werden!
+                </div>
+            ) : null }
+            
+            { session != null ? (
+                <div className="alert alert-into">
+                    { /* Fill text here */ }
+                    Einfahrt um {session.entered_at.toLocaleString('de-DE')}. <br/>
+                    Ihre Session ID ist {session.id}. Bitte beim Ausfahren eingeben.
+                </div>
+            ) : null }
+
+            { einfahrtSaveError ? (
+                <div className="alert alert-danger">
+                    { /* Fill text here */ }
+                    Ein Fehler beim Verarbeiten der Einfahrt ist passiert!
+                </div>
+            ) : null }
+
+            { keinPlatzError ? (
+                <div className="alert alert-danger">
+                    { /* Fill text here */ }
+                    Eine Einfahrt ist nicht möglich, da kein Platz mehr frei ist!
                 </div>
             ) : null }
 
             <label htmlFor="CntFreePlaces">
-                <b>Freie Parkplätze:</b>
+                <b>Freie Parkplätze:&nbsp;</b>
             </label>
-            <output name="x" for=" ">
+            <label id="CntFreePlaces">
                 {freiKurz > 4 ? freiKurz : "Belegt"}
-            </output>
+            </label>
 
             <hr style={{ border: "1px solid #f1f1f1", "marginBottom": "25px" }} />
 
