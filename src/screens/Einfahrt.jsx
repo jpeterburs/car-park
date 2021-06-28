@@ -11,7 +11,7 @@ const Einfahrt = () => {
     const [dataFetchError, setDataFetchError] = useState(false);
     const [einfahrtSaveError, setEinfahrtSaveError] = useState(false);
     const [keinPlatzError, setKeinPlatzError] = useState(false);
-    
+
 
     useEffect(() => {
         BackendConnector.getParkerAmount().then((resp) => {
@@ -69,9 +69,9 @@ const Einfahrt = () => {
                     Verbindung zum Server konnte nicht hergestellt werden!
                 </div>
             ) : null }
-            
+
             { session != null ? (
-                <div className="alert alert-into">
+                <div className="alert alert-info">
                     { /* Fill text here */ }
                     Einfahrt um {session.entered_at.toLocaleString('de-DE')}. <br/>
                     Ihre Session ID ist {session.id}. Bitte beim Ausfahren eingeben.
