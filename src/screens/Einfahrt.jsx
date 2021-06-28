@@ -57,6 +57,13 @@ const Einfahrt = () => {
         }
     };
 
+    const dateTimeFormatter = (date) => {
+
+        let output = `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}, ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+
+        return output;
+    }
+
     return (
         <div className="container">
             <h1>Einfahrt</h1>
@@ -73,7 +80,7 @@ const Einfahrt = () => {
             { session != null ? (
                 <div className="alert alert-info">
                     { /* Fill text here */ }
-                    Einfahrt um {session.entered_at.toLocaleString('de-DE')}. <br/>
+                    Einfahrt um {dateTimeFormatter(session.entered_at)}. <br/>
                     Ihre Session ID ist {session.id}. Bitte beim Ausfahren eingeben.
                 </div>
             ) : null }
