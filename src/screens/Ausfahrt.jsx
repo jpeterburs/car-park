@@ -13,6 +13,9 @@ const Ausfahrt = () => {
     const [paymentError, setPaymentError] = useState(false);
 
     const handleAusfahrt = () => {
+        setFetchSessionError(false);
+        setPaymentError(false);
+
         BackendConnector.getSession(sessionID).then((session) => {
             setSession(session);
 
@@ -97,7 +100,7 @@ const Ausfahrt = () => {
                     <label htmlFor="Price">
                         <b>Total:</b>
                     </label>
-                    <output name="Price" htmlFor=" " value={parkdauer}></output>
+                    <label name="Price">{parkdauer}</label>
 
                     <br />
                     <br />
