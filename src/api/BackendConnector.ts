@@ -28,6 +28,7 @@ class BackendConnector {
                     throw new Error(`API didn't respond with success. Status Code: ${resp.status}`);
                 }
             });
+
             return session.session;
         } catch (error) {
             throw new Error(`Network Error: ${error}`);

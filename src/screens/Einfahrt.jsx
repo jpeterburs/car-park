@@ -11,6 +11,7 @@ const Einfahrt = () => {
     const [dataFetchError, setDataFetchError] = useState(false);
     const [einfahrtSaveError, setEinfahrtSaveError] = useState(false);
     const [keinPlatzError, setKeinPlatzError] = useState(false);
+    const [ausfahrtDatum, setAusfahrtDatum] = useState("");
 
 
     useEffect(() => {
@@ -25,6 +26,12 @@ const Einfahrt = () => {
             setDataFetchError(true);
         });
     }, []);
+
+    useEffect(() => {
+        if (session != null) {
+            setAusfahrtDatum(dateTimeFormatter(new Date(session.entered_at)));
+        }
+    }, [session])
 
     const handleEinfahrt = () => {
         let einfahrtSuccess = false;
@@ -58,7 +65,6 @@ const Einfahrt = () => {
     };
 
     const dateTimeFormatter = (date) => {
-
         let output = `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}, ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
         return output;
@@ -80,7 +86,7 @@ const Einfahrt = () => {
             { session != null ? (
                 <div className="alert alert-info">
                     { /* Fill text here */ }
-                    Einfahrt um {dateTimeFormatter(session.entered_at)}. <br/>
+                    Einfahrt um {ausfahrtDatum}. <br/>
                     Ihre Session ID ist {session.id}. Bitte beim Ausfahren eingeben.
                 </div>
             ) : null }

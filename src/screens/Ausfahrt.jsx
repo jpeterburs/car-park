@@ -25,6 +25,9 @@ const Ausfahrt = () => {
                 setParkerType(ParkerType.Kurz);
             }
 
+            let dauerInMS = new Date() - new Date(session.entered_at);
+            setParkdauer(Math.ceil(dauerInMS / 1000 / 60 / 60));
+
             setReadyToExit(true);
         }).catch((error) => {
             setFetchSessionError(true);
@@ -33,8 +36,8 @@ const Ausfahrt = () => {
 
     const handlePay = () => {
         BackendConnector.updateSession(session.id).then((session) => {
-            let dauerInMS = session.exited_at - session.entered_at;
-            setParkdauer(Math.ceil(dauerInMS / 1000 / 60 / 60));
+            /* let dauerInMS = new Date(session.exited_at) - new Date(session.entered_at);
+            setParkdauer(Math.ceil(dauerInMS / 1000 / 60 / 60)); */
         }).catch((error) => {
             setPaymentError(true);
         });
@@ -98,9 +101,9 @@ const Ausfahrt = () => {
                     <hr style={{ border: "1px solid #f1f1f1", "margin-bottom": "25px" }} />
 
                     <label htmlFor="Price">
-                        <b>Total:</b>
+                        <b>Total:&nbsp;</b>
                     </label>
-                    <label name="Price">{parkdauer}</label>
+                    <label name="Price">{parkdauer} €</label>
 
                     <br />
                     <br />
