@@ -90,6 +90,10 @@ input[tyxpe=text]:focus {
   background: #ddd;
 }
 
+.btn-disabled {
+  cursor: not-allowed;
+}
+
 .keep-left {
   float: left;
 }
