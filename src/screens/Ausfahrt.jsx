@@ -11,36 +11,40 @@ const Ausfahrt = () => {
     const [parkdauer, setParkdauer] = useState(null);
     const [fetchSessionError, setFetchSessionError] = useState(false);
     const [paymentError, setPaymentError] = useState(false);
+    const [paymentDone, setPaymentDoner] = useState(false);
 
     const handleAusfahrt = () => {
         setFetchSessionError(false);
         setPaymentError(false);
 
-        BackendConnector.getSession(sessionID).then((session) => {
-            setSession(session);
+        BackendConnector.getSession(sessionID)
+            .then((session) => {
+                setSession(session);
 
-            if (session.permanent_parker) {
-                setParkerType(ParkerType.Dauer);
-            } else {
-                setParkerType(ParkerType.Kurz);
-            }
+                if (session.permanent_parker) {
+                    setParkerType(ParkerType.Dauer);
+                } else {
+                    setParkerType(ParkerType.Kurz);
+                }
 
-            let dauerInMS = new Date() - new Date(session.entered_at);
-            setParkdauer(Math.ceil(dauerInMS / 1000 / 60 / 60));
+                let dauerInMS = new Date() - new Date(session.entered_at);
+                setParkdauer(Math.ceil(dauerInMS / 1000 / 60 / 60));
 
-            setReadyToExit(true);
-        }).catch((error) => {
-            setFetchSessionError(true);
-        });
+                setReadyToExit(true);
+            })
+            .catch((error) => {
+                setFetchSessionError(true);
+            });
     };
 
     const handlePay = () => {
-        BackendConnector.updateSession(session.id).then((session) => {
-            /* let dauerInMS = new Date(session.exited_at) - new Date(session.entered_at);
-            setParkdauer(Math.ceil(dauerInMS / 1000 / 60 / 60)); */
-        }).catch((error) => {
-            setPaymentError(true);
-        });
+        BackendConnector.updateSession(session.id)
+            .then((session) => {
+                setPaymentDoner(true);
+            })
+            .catch((error) => {
+                setPaymentError(true);
+            });
     };
 
     const handleKeypress = (e) => {
@@ -54,23 +58,30 @@ const Ausfahrt = () => {
         <div className="container">
             <h1>Bezahlen / Ausfahrt</h1>
 
-            { /* Hide this on default, if error then show this */ }
-            { /* insert fitting class name here for color of alert */ }
-            { fetchSessionError ? (
+            {/* Hide this on default, if error then show this */}
+            {/* insert fitting class name here for color of alert */}
+            {fetchSessionError ? (
                 <div className="alert alert-danger">
-                    { /* Fill text here */ }
+                    {/* Fill text here */}
                     Es gab ein Problem beim Abrufen der Session!
                 </div>
-            ) : null }
+            ) : null}
 
-            { paymentError ? (
+            {paymentError ? (
                 <div className="alert alert-danger">
-                    { /* Fill text here */ }
+                    {/* Fill text here */}
                     Es gab ein Problem bei der Bezahlung!
                 </div>
-            ) : null }
+            ) : null}
 
-            <hr style={{ border: "1px solid #f1f1f1", "marginBottom": "25px" }} />
+            {paymentDone ? (
+                <div className="alert alert-info">
+                    {/* Fill text here */}
+                    Sie können jetzt rausfahren.
+                </div>
+            ) : null}
+
+            <hr style={{ border: "1px solid #f1f1f1", marginBottom: "25px" }} />
 
             <label htmlFor="SessionId">
                 <b>Session ID:</b>
@@ -137,7 +148,9 @@ const Ausfahrt = () => {
             ) : null}
 
             <br />
-            <Link className="link" to="/">zurück...</Link>
+            <Link className="link" to="/">
+                zurück...
+            </Link>
         </div>
     );
 };
