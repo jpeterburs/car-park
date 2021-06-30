@@ -123,7 +123,7 @@ const Ausfahrt = () => {
                     <div className="clearfix">
                         <button
                             className={`btn ${
-                                readyToExit && parkerType === ParkerType.Kurz ? "btn-info" : "btn-default"
+                                readyToExit && parkerType === ParkerType.Kurz ? "btn-info" : "btn-default btn-disabled"
                             } keep-left`}
                             type="button"
                             style={{ width: "50%", margin: "0" }}
@@ -134,7 +134,7 @@ const Ausfahrt = () => {
                         </button>
                         <button
                             className={`btn ${
-                                readyToExit && parkerType === ParkerType.Dauer ? "btn-info" : "btn-default"
+                                readyToExit && parkerType === ParkerType.Dauer ? "btn-info" : "btn-default btn-disabled"
                             } keep-left`}
                             type="button"
                             style={{ width: "50%", margin: "0" }}
