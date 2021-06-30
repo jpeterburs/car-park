@@ -17,6 +17,6 @@ export interface Session {
         first_name: string;
         last_name: string;
     } | null;
-    entered_at: Date;
-    exited_at: Date | null;
+    entered_at: string;
+    exited_at: string;
 }
